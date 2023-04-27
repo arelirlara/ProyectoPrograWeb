@@ -1,0 +1,11 @@
+:root {
+    --primario: #61c6c9;
+    --fuente: #fd0061;
+}
+
+.bg-color {
+    background-color: var(--primario);
+}
+a {
+    color: var(--fuente);
+}
