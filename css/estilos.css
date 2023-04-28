@@ -6,6 +6,6 @@
 .bg-color {
     background-color: var(--primario);
 }
-a {
-    color: var(--fuente);
+#pruebaColor {
+    color: #fd0061;
 }
