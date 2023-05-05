@@ -1,11 +1,40 @@
 :root {
-    --primario: #61c6c9;
+    --primario: #97f1e4;
     --fuente: #fd0061;
 }
 
-.bg-color {
+header {
+    display: block;
     background-color: var(--primario);
-}
-#pruebaColor {
-    color: #fd0061;
-}
+    width: 100%;
+  }
+  
+  footer {
+    background-color: var(--primario);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    color: white;
+  }
+  
+  footer li {
+    text-align: right;
+    display: inline;
+  }
+  
+  footer li a {
+    display: inline-block;
+    padding: 10px;
+    color: var(--fuente);
+  }
+  
+  html {
+    min-height: 100%;
+    position: relative;
+  }
+  
+  body {
+    margin: 0;
+    margin-bottom: 40px;
+  }
