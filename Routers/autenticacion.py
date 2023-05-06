@@ -3,24 +3,20 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from schemas.schemas import AwesomeForm
+from DB.DB import coleccion
 
 router = APIRouter()
 router.mount("/static", StaticFiles(directory="static"), name="static")
 plantillas = Jinja2Templates(directory="plantillas")
 
 def buscarUsuario(usuario: str, contrasena: str):
-    for i in range(len(usuariosAdmin)):
-        if usuariosAdmin[i]["usuario"] == usuario and usuariosAdmin[i]["contrasena"] == contrasena:
-            return True
-
-usuariosAdmin = [{
-    "usuario": "OscarDev2345",
-    "contrasena": "123456"
-},
-{
-    "usuario": "AreliDev9087",
-    "contrasena": "098765"
-}]
+    usuarioEncontrado = coleccion.find_one({"usuario": usuario})
+    if usuarioEncontrado is None:
+        return False
+    elif usuarioEncontrado["contrasena"] != contrasena:
+        return False
+    else:
+        return True
 
 @router.get("/", response_class=HTMLResponse)
 async def index(request: Request):
