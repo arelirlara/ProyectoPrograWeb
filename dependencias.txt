@@ -1,0 +1,6 @@
+Dependencias:
+- FastAPI
+- uvicorn
+- Jinja2
+- aiofiles
+- python-multipart

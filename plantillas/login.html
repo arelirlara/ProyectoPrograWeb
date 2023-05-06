@@ -22,21 +22,17 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <form>
+                    <form method="POST" action="/login">
                         <div class="mt-4 mb-2">
-                            <input type="text" class="form-control border border-2" id="inputUsuario" placeholder="Usuario">
+                            <input type="text" class="form-control border border-2" id="usuario" name="usuario" placeholder="Usuario">
                         </div>
                         <div>
-                            <input type="password" class="form-control border border-2" id="inputPassword" placeholder="Contraseña">
+                            <input type="password" class="form-control border border-2" id="contrasena" name="contrasena" placeholder="Contraseña">
+                        </div>
+                        <div class="mx-5">
+                            <input type="submit" class="btn mt-4 px-4" style="background-color: #fd0061; color: white;" value="Iniciar Sesión">
                         </div>
                     </form>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="container" style="width: 190px">
-                        <button type="submit" class="btn mt-4 px-4" style="background-color: #fd0061; color: white;">Iniciar sesión</button>
-                    </div>
                 </div>
             </div>
         </div>
