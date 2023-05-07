@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="styelsheet" href="css/estilos.css">
+    <title>Nuevo arreglo</title>
+</head>
+<body>
+    <!-- BARRA DE NAVEGACION -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #97f1e4;">
+        <div class="container-fluid ms-2 me-5">
+            <div class="row-8">
+                <div class="col">
+                    <a class="navbar-brand fw-bold fs-2" href="#">
+                        <img src="../imagenes/logo.jpeg" alt="logo" width="60" height="60" class="d-inline-block align-text-center rounded-circle me-2">TULIP
+                    </a>
+                </div>
+            </div>
+            <div class="row-4">
+                <div class="col">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link active fw-bold" href="#" style="color: #fd0061;">Catálogo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" href="#">Contacto</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bold" href="#">Cerrar sesión</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <!-- BOTON AGREGAR NUEVO ARREGLO -->
+            <div class="row">
+                <div class="col">
+                    <input type="submit" class="btn btn-danger mt-4 px-4" value="Agregar nuevo arreglo">
+                </div>
+            </div>
+            <!-- ENCABEZADOS -->
+            <div class="row" id="encabezados">
+                <div class="container text-center mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <h2 class="fs-4 fw-bold">ID</h2>
+                        </div>
+                        <div class="col">
+                            <h2 class="fs-4 fw-bold">Nombre</h2>
+                        </div>
+                        <div class="col">
+                            <h2 class="fs-4 fw-bold">Descripción</h2>
+                        </div>
+                        <div class="col">
+                            <h2 class="fs-4 fw-bold">Precio</h2>
+                        </div>
+                        <div class="col">
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                                    <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+                                </svg>
+                            </a>
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- INFORMACION DE CADA PRODUCTO -->
+            <div class="row">
+                <div class="container text-center mt-3">
+                    <div class="row">
+                        <div class="col">
+                            <p class="fs-4">ID</p>
+                        </div>
+                        <div class="col">
+                            <p class="fs-4">Nombre</p>
+                        </div>
+                        <div class="col">
+                            <p class="fs-4">Descripción</p>
+                        </div>
+                        <div class="col">
+                            <p class="fs-4">Precio</p>
+                        </div>
+                        <div class="col">
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                                    <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+                                </svg>
+                            </a>
+                            <a href="#">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <line x1="4" y1="7" x2="20" y2="7" />
+                                    <line x1="10" y1="11" x2="10" y2="17" />
+                                    <line x1="14" y1="11" x2="14" y2="17" />
+                                    <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                    <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- PRUEBA: MANIPULACION DEL DOM CON BRYTHON -->
+    <script src="https://cdn.jsdelivr.net/npm/brython@3/brython.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
+    <script type="text/python">
+        from browser import *
+
+        
+    </script>
+    <script type="text/javascript">
+        // Inicializar Brython
+        window.onload = function() {
+            brython();
+        };
+    </script>
+</body>
+</html>
