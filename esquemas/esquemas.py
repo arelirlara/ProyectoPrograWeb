@@ -25,12 +25,14 @@ class DatosAutenticacion(BaseModel):
 class DatosProducto(DatosGenerales):
     descripcion: str
     precio: str
+    imagen: str
 
 def productoEsquema(producto) -> dict:
     return {"id": str(producto["_id"]),
             "nombre": str(producto["nombre"]),
             "descripcion": str(producto["descripcion"]),
-            "precio": str(producto["precio"])}
+            "precio": str(producto["precio"]),
+            "imagen": str(producto["imagen"])}
 
 def productosEsquema(productos) -> list:
     return [productoEsquema(producto) for producto in productos]
@@ -40,14 +42,15 @@ class DatosSucursales(DatosGenerales):
     telefono: str
     celular: str
     direccion: str
-    urlmaps: str
+    urlMaps: str
 
 def sucursalEsquema(sucursal) -> dict:
     return {"id": str(sucursal["_id"]),
             "nombre": str(sucursal["nombre"]),
             "telefono": str(sucursal["telefono"]),
+            "celular": str(sucursal["celular"]),
             "direccion": str(sucursal["direccion"]),
-            "urlmaps": str(sucursal["urlmaps"])}
+            "urlMaps": str(sucursal["urlMaps"])}
 
 def sucursalesEsquema(sucursales) -> list:
     return [sucursalEsquema(sucursal) for sucursal in sucursales]

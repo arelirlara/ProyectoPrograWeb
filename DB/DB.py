@@ -4,3 +4,4 @@ cliente = MongoClient("mongodb+srv://Plantium:Plantium@cluster0.yxlgbor.mongodb.
 db = cliente["Plantium"]
 coleccion = db["users"]
 coleccionProductos = db["products"]
+coleccionSucursales = db["stores"]

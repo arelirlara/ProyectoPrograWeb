@@ -90,7 +90,7 @@
                 <div class="container text-center mt-3">
                     <div class="row">
                         <div class="col">
-                            <p class="fs-4">ID</p>
+                            <p class="fs-4" id="idProducto">ID</p>
                         </div>
                         <div class="col">
                             <p class="fs-4">Nombre</p>
@@ -132,8 +132,19 @@
     <script src="https://cdn.jsdelivr.net/npm/brython@3/brython_stdlib.js"></script>
     <script type="text/python">
         from browser import *
+        #from catalogo.listaProductos import totalProductos
+        from plantillas.pruebaBr import hola
 
-        
+        etiquetaId = document['idProducto']
+        etiquetaId.textContent = 'hola'
+
+        '''
+        for elemento in totalProductos:
+            for clave, valor in elemento.items():
+                if clave == 'nombre':
+                    etiquetaId = document['idProducto']
+                    etiquetaId.textContent = valor
+        '''
     </script>
     <script type="text/javascript">
         // Inicializar Brython

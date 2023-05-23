@@ -28,4 +28,4 @@ async def enviarFormulario(request: Request, datosFormulario: DatosAutenticacion
     if not usuarioAdmin:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Credenciales de autenticación inválidas.")
     
-    return plantillas.TemplateResponse("prueba.html", {"request": request})
+    return plantillas.TemplateResponse("catalogo_administrador.html", {"request": request})
