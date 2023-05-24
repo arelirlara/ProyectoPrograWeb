@@ -23,6 +23,18 @@ async def nuevoProducto(producto: DatosProducto):
 
     return DatosProducto((nuevo_producto))
 
+@router.put("/editar_producto", response_model=DatosProducto)
+async def user(producto: DatosProducto):
+        producto_diccionario = dict(producto)
+        del producto_diccionario["id"]
+
+        try:
+            coleccionProductos.find_one_and_replace({"_id": ObjectId(producto.id)}, producto_diccionario)
+        except:
+            return {"error": "No se ha actualizado el producto."}
+        
+        return buscarProducto("_id", ObjectId(producto.id))
+
 @router.delete("/eliminar_producto/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def eliminarProducto(id: str):
     encontrado = coleccionProductos.find_one_and_delete({"_id": ObjectId(id)})
