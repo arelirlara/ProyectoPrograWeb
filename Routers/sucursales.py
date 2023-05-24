@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
 from DB.DB import coleccionSucursales
 from esquemas.esquemas import DatosSucursales, sucursalesEsquema
+from bson import ObjectId
 
 router = APIRouter(prefix="/sucursales", tags=["sucursales"], responses={404: {"message": "Sin sucursales registrados."}})
 
@@ -21,6 +22,13 @@ async def nuevoProducto(sucursal: DatosSucursales):
     nueva_sucursal = sucursalesEsquema(coleccionSucursales.find_one({"_id": id}))
 
     return DatosSucursales((nueva_sucursal))
+
+@router.delete("/eliminar_sucursal/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def eliminarSucursal(id: str):
+    encontrado = coleccionSucursales.find_one_and_delete({"_id": ObjectId(id)})
+
+    if not encontrado:
+        return {"error": "No se ha encontrado la sucursal."}
 
 def buscarSucursal(field: str, key):
     try:

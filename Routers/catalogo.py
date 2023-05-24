@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
 from DB.DB import coleccionProductos
 from esquemas.esquemas import DatosProducto, productosEsquema
+from bson import ObjectId
 
 router = APIRouter(prefix="/productos", tags=["productos"], responses={404: {"message": "Sin productos registrados."}})
 
@@ -21,6 +22,13 @@ async def nuevoProducto(producto: DatosProducto):
     nuevo_producto = productosEsquema(coleccionProductos.find_one({"_id": id}))
 
     return DatosProducto((nuevo_producto))
+
+@router.delete("/eliminar_producto/{id}", status_code=status.HTTP_204_NO_CONTENT)
+async def eliminarProducto(id: str):
+    encontrado = coleccionProductos.find_one_and_delete({"_id": ObjectId(id)})
+
+    if not encontrado:
+        return {"error": "No se ha encontrado el producto."}
 
 def buscarProducto(field: str, key):
     try:
