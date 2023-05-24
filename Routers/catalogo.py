@@ -8,7 +8,7 @@ router = APIRouter(prefix="/productos", tags=["productos"], responses={404: {"me
 async def listaProductos():
     return productosEsquema(coleccionProductos.find())
 
-@router.post("/nuevo",response_model= DatosProducto ,status_code=201)
+@router.post("/nuevo_producto",response_model= DatosProducto ,status_code=201)
 async def nuevoProducto(producto: DatosProducto):
     if type(buscarProducto("nombre", producto.nombre)) == DatosProducto:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El producto ya existe")
