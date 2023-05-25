@@ -23,6 +23,18 @@ async def nuevoProducto(sucursal: DatosSucursales):
 
     return DatosSucursales((nueva_sucursal))
 
+@router.put("/editar_sucursal", response_model=DatosSucursales)
+async def user(sucursal: DatosSucursales):
+        sucursal_diccionario = dict(sucursal)
+        del sucursal_diccionario["id"]
+
+        try:
+            coleccionSucursales.find_one_and_replace({"_id": ObjectId(sucursal.id)}, sucursal_diccionario)
+        except:
+            return {"error": "No se ha actualizado el producto."}
+        
+        return buscarSucursal("_id", ObjectId(sucursal.id))
+
 @router.delete("/eliminar_sucursal/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def eliminarSucursal(id: str):
     encontrado = coleccionSucursales.find_one_and_delete({"_id": ObjectId(id)})
