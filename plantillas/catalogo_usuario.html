@@ -47,7 +47,28 @@
             </div>
         </nav>
     </header>
-    
+
+    <div class="row" id="encabezados">
+        <div class="container text-center mt-3">
+            <div class="row">
+                <div class="col">
+                    <h2 class="fs-4 fw-bold">ID</h2>
+                </div>
+                <div class="col">
+                    <h2 class="fs-4 fw-bold">Nombre</h2>
+                </div>
+                <div class="col">
+                    <h2 class="fs-4 fw-bold">Descripción</h2>
+                </div>
+                <div class="col">
+                    <h2 class="fs-4 fw-bold">Precio</h2>
+                </div>
+                <div class="col">
+                    <h2 class="fs-4 fw-bold">Opciones</h2>
+                </div>
+            </div>
+        </div>
+    </div>
     <footer style="background-color: #97f1e4; padding:5px">
         <ul>
             <a style="font-size: 10px; color: black;" href="login.html">Iniciar sesión</a>
@@ -56,28 +77,56 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <script>
-        for(let i = 0; i < 2; i++) {
-            const idProducto = document.getElementById(`idProducto${i}`);
-            const nombreProducto = document.getElementById(`nombreProducto${i}`);
-            const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
-            const precioProducto = document.getElementById(`precioProducto${i}`);
-
-            fetch('http://127.0.0.1:8000/productos/')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(item => {
-                        idProducto.textContent = item.id;
-                        nombreProducto.textContent = item.nombre;
-                        descripcionProducto.textContent = item.descripcion;
-                        precioProducto.textContent = item.precio;
+        <script>
+            const container = document.getElementById('encabezados');
+    
+            for(let i = 0; i < 2; i++) {
+                const div = document.createElement('div');
+                div.classList.add('card');
+                div.innerHTML = `
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6 text-primary bold" id="idProducto${i}"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6" id="nombreProducto${i}"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6" id="descripcionProducto${i}"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6" id="precioProducto${i}"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <a href="#">
+                            text
+                        </a>
+                    </div>
+                `;
+    
+                container.appendChild(div);
+            }
+    
+            for(let i = 0; i < 2; i++) {
+                const idProducto = document.getElementById(`idProducto${i}`);
+                const nombreProducto = document.getElementById(`nombreProducto${i}`);
+                const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
+                const precioProducto = document.getElementById(`precioProducto${i}`);
+    
+                fetch('http://127.0.0.1:8000/productos/')
+                    .then(response => response.json())
+                    .then(data => {
+                        data.forEach(item => {
+                            idProducto.textContent = item.id;
+                            nombreProducto.textContent = item.nombre;
+                            descripcionProducto.textContent = item.descripcion;
+                            precioProducto.textContent = item.precio;
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
                     });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
-    </script>
+            }
+        </script>
 </body>
 
 </html>
