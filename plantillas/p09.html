@@ -53,21 +53,21 @@
             </div>
             
             <div class="container mx-auto mt-4" style="width: 260px">
-                <form method="POST" action="/productos">
+                <form method="POST" action="/productos/crear_producto">
                     <div class="mb-3">
-                        <input type="text" class="form-control border border-2" id="inputNombre" placeholder="Nombre">
+                        <input type="text" class="form-control border border-2" name="inputNombre" placeholder="Nombre">
                     </div>
         
                     <div class="mb-3">
-                        <textarea type="text" class="form-control border border-2" id="inputDescripcion" placeholder="Descripción" style="resize: none;"></textarea>
+                        <textarea type="text" class="form-control border border-2" name="inputDescripcion" placeholder="Descripción" style="resize: none;"></textarea>
                     </div>
         
                     <div class="mb-3">
-                        <input type="text" class="form-control border border-2" id="inputPrecio" placeholder="Precio">
+                        <input type="text" class="form-control border border-2" name="inputPrecio" placeholder="Precio">
                     </div>
                     
                     <div class="container mx-auto" style="width: 130px">
-                        <button type="submit" class="btn btn-danger mt-4 px-4">Agregar</button>
+                        <input type="submit" class="btn btn-danger mt-4 px-4" value="Agregar">
                     </div>
                 </form>
             </div>

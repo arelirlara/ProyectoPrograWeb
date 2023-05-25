@@ -18,19 +18,38 @@ async def listaProductos():
 async def nuevoProducto(request: Request):
     return plantillas.TemplateResponse("p09.html", {"request": request})
 
-@router.post("/nuevo_producto",response_model= DatosProducto ,status_code=201)
-async def nuevoProducto(producto: DatosProducto):
-    if type(buscarProducto("nombre", producto.nombre)) == DatosProducto:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="El producto ya existe")
+@router.post("/nuevo_producto", response_class=HTMLResponse)
+async def enviarFormulario(request: Request, producto: DatosProducto):
+    # Obtener los datos del formulario enviado en la solicitud POST
+    form_data = await request.form()
+
+    nombre_producto = form_data.get('inputNombre')
+    descripcion_producto = form_data.get('inputDescripcion')
+    precio_producto = form_data.get('inputPrecio')
+
+    producto = producto(nombreProducto=nombre_producto, descripcionProducto=descripcion_producto, precioProducto=precio_producto)
+
+    coleccionProductos.insert_one(producto.dict())
+
+    return plantillas.TemplateResponse("p10.html", {"request": request})
+
+@router.post("/crear_producto")
+async def crear_producto(request: Request):
+    form_data = await request.form()
     
-    diccionario_producto = dict(producto)
-    del diccionario_producto["id"]
+    nombre_producto = form_data.get('inputNombre')
+    descripcion_producto = form_data.get('inputDescripcion')
+    precio_producto = form_data.get('inputPrecio')
+    
+    producto = {
+        "nombre": nombre_producto,
+        "descripcion": descripcion_producto,
+        "precio": precio_producto
+    }
 
-    id = coleccionProductos.insert_one(diccionario_producto).inserted_id
+    coleccionProductos.insert_one(producto)
 
-    nuevo_producto = productosEsquema(coleccionProductos.find_one({"_id": id}))
-
-    return DatosProducto((nuevo_producto))
+    return {"message": "Producto agregado correctamente"}
 
 @router.put("/editar_producto", response_model=DatosProducto)
 async def user(producto: DatosProducto):
