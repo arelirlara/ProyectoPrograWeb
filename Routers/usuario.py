@@ -14,3 +14,11 @@ async def catalogo(request: Request):
 @router.get("/contacto", response_class=HTMLResponse)
 async def sucursales(request: Request):
     return plantillas.TemplateResponse("contacto_usuario.html", {"request": request})
+
+@router.get("/inicio", response_class=HTMLResponse)
+async def catalogo(request: Request):
+    return plantillas.TemplateResponse("inicio_usuario.html", {"request": request})
+
+@router.get("/nosotros", response_class=HTMLResponse)
+async def catalogo(request: Request):
+    return plantillas.TemplateResponse("nosotros_usuario.html", {"request": request})
