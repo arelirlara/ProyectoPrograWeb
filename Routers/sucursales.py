@@ -1,27 +1,59 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from DB.DB import coleccionSucursales
 from esquemas.esquemas import DatosSucursales, sucursalesEsquema
 from bson import ObjectId
 
 router = APIRouter(prefix="/sucursales", tags=["sucursales"], responses={404: {"message": "Sin sucursales registrados."}})
+router.mount("/static", StaticFiles(directory="static"), name="static")
+plantillas = Jinja2Templates(directory="plantillas")
 
 @router.get("/", response_model=list[DatosSucursales])
 async def listaSucursales():
     return sucursalesEsquema(coleccionSucursales.find())
 
-@router.post("/nueva_sucursal",response_model= DatosSucursales ,status_code=201)
-async def nuevoProducto(sucursal: DatosSucursales):
-    if type(buscarSucursal("nombre", sucursal.nombre)) == DatosSucursales:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="La sucursal ya existe")
+@router.get("/nueva_sucursal", response_class=HTMLResponse)
+async def nuevaSucursal(request: Request):
+    return plantillas.TemplateResponse("p13.html", {"request": request})
+
+@router.post("/nueva_sucursal", response_class=HTMLResponse)
+async def nuevaSucursal(request: Request, sucursal: DatosSucursales):
+    # Obtener los datos del formulario enviado en la solicitud POST
+    form_data = await request.form()
+
+    nombre_sucursal = form_data.get('inputNombre')
+    telefono_sucursal = form_data.get('inputTelefono')
+    celular_sucursal = form_data.get('inputCelular')
+    direccion_sucursal = form_data.get('inputDireccion')
+    url = form_data.get('inputURL')
+
+    sucursal = sucursal(nombreSucursal=nombre_sucursal, telefonoSucursal=telefono_sucursal, celularSucursal=celular_sucursal, direccionSucursal=direccion_sucursal, url=url)
+
+    coleccionSucursales.insert_one(sucursal.dict())
+
+@router.post("/crear_sucursal")
+async def crearSucursal(request: Request):
+    form_data = await request.form()
     
-    diccionario_sucursal = dict(sucursal)
-    del diccionario_sucursal["id"]
+    nombre_sucursal = form_data.get('inputNombre')
+    telefono_sucursal = form_data.get('inputTelefono')
+    celular_sucursal = form_data.get('inputCelular')
+    direccion_sucursal = form_data.get('inputDireccion')
+    url = form_data.get('inputURL')
+    
+    sucursal = {
+        "nombre": nombre_sucursal,
+        "telefono": telefono_sucursal,
+        "celular": celular_sucursal,
+        "direccion": direccion_sucursal,
+        "urlMaps": url
+    }
 
-    id = coleccionSucursales.insert_one(diccionario_sucursal).inserted_id
+    coleccionSucursales.insert_one(sucursal)
 
-    nueva_sucursal = sucursalesEsquema(coleccionSucursales.find_one({"_id": id}))
-
-    return DatosSucursales((nueva_sucursal))
+    return {"message": "Sucursal agregada correctamente"}
 
 @router.put("/editar_sucursal", response_model=DatosSucursales)
 async def user(sucursal: DatosSucursales):

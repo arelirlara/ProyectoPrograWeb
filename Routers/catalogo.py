@@ -31,8 +31,6 @@ async def enviarFormulario(request: Request, producto: DatosProducto):
 
     coleccionProductos.insert_one(producto.dict())
 
-    return plantillas.TemplateResponse("p10.html", {"request": request})
-
 @router.post("/crear_producto")
 async def crear_producto(request: Request):
     form_data = await request.form()

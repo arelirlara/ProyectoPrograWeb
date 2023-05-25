@@ -53,29 +53,29 @@
             </div>
             
             <div class="container mx-auto mt-4" style="width: 260px">
-                <form>
+                <form method="POST" action="/sucursales/crear_sucursal">
                     <div class="mb-3">
-                        <input type="text" class="form-control border border-2" id="inputNombre" placeholder="Nombre">
+                        <input type="text" class="form-control border border-2" name="inputNombre" placeholder="Nombre">
                     </div>
         
                     <div class="mb-3">
-                        <input type="tel" class="form-control border border-2" id="inputTelefono" placeholder="Teléfono">
+                        <input type="tel" class="form-control border border-2" name="inputTelefono" placeholder="Teléfono">
                     </div>
 
                     <div class="mb-3">
-                        <input type="tel" class="form-control border border-2" id="inputCelular" placeholder="Celular">
+                        <input type="tel" class="form-control border border-2" name="inputCelular" placeholder="Celular">
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" class="form-control border border-2" id="inputDireccion" placeholder="Dirección">
+                        <input type="text" class="form-control border border-2" name="inputDireccion" placeholder="Dirección">
                     </div>
 
                     <div class="mb-3">
-                        <input type="text" class="form-control border border-2" id="inputURL" placeholder="URL maps">
+                        <input type="text" class="form-control border border-2" name="inputURL" placeholder="URL maps">
                     </div>
 
                     <div class="container mx-auto" style="width: 130px">
-                        <button type="submit" class="btn btn-danger px-4">Agregar</button>
+                        <input type="submit" class="btn btn-danger px-4" value="Agregar">
                     </div>
                 </form>
             </div>
