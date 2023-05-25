@@ -3,7 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-router = APIRouter(prefix="/tulip", tags=["tulip"], responses={404: {"message": "Sin usuarios registrados."}})
+router = APIRouter(prefix="/tulip", tags=["tulip"])
 router.mount("/static", StaticFiles(directory="static"), name="static")
 plantillas = Jinja2Templates(directory="plantillas")
 

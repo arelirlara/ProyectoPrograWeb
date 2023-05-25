@@ -18,21 +18,6 @@ async def listaSucursales():
 async def nuevaSucursal(request: Request):
     return plantillas.TemplateResponse("p13.html", {"request": request})
 
-@router.post("/nueva_sucursal", response_class=HTMLResponse)
-async def nuevaSucursal(request: Request, sucursal: DatosSucursales):
-    # Obtener los datos del formulario enviado en la solicitud POST
-    form_data = await request.form()
-
-    nombre_sucursal = form_data.get('inputNombre')
-    telefono_sucursal = form_data.get('inputTelefono')
-    celular_sucursal = form_data.get('inputCelular')
-    direccion_sucursal = form_data.get('inputDireccion')
-    url = form_data.get('inputURL')
-
-    sucursal = sucursal(nombreSucursal=nombre_sucursal, telefonoSucursal=telefono_sucursal, celularSucursal=celular_sucursal, direccionSucursal=direccion_sucursal, url=url)
-
-    coleccionSucursales.insert_one(sucursal.dict())
-
 @router.post("/crear_sucursal")
 async def crearSucursal(request: Request):
     form_data = await request.form()

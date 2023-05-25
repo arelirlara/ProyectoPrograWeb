@@ -18,19 +18,6 @@ async def listaProductos():
 async def nuevoProducto(request: Request):
     return plantillas.TemplateResponse("p09.html", {"request": request})
 
-@router.post("/nuevo_producto", response_class=HTMLResponse)
-async def enviarFormulario(request: Request, producto: DatosProducto):
-    # Obtener los datos del formulario enviado en la solicitud POST
-    form_data = await request.form()
-
-    nombre_producto = form_data.get('inputNombre')
-    descripcion_producto = form_data.get('inputDescripcion')
-    precio_producto = form_data.get('inputPrecio')
-
-    producto = producto(nombreProducto=nombre_producto, descripcionProducto=descripcion_producto, precioProducto=precio_producto)
-
-    coleccionProductos.insert_one(producto.dict())
-
 @router.post("/crear_producto")
 async def crear_producto(request: Request):
     form_data = await request.form()
