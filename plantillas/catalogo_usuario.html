@@ -91,11 +91,10 @@
             fetch('http://127.0.0.1:8000/productos/')
                 .then(response => response.json())
                 .then(data => {
-                    data.forEach(item => {
-                        nombreProducto.textContent = item.nombre;
-                        descripcionProducto.textContent = item.descripcion;
-                        precioProducto.textContent = item.precio;
-                    });
+                    const item = data[i]; // Obtener el elemento correspondiente al índice actual
+                    nombreProducto.textContent = item.nombre;
+                    descripcionProducto.textContent = item.descripcion;
+                    precioProducto.textContent = item.precio;
                 })
                 .catch(error => {
                     console.error('Error:', error);
