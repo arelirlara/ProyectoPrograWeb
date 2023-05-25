@@ -1,13 +1,22 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from DB.DB import coleccionProductos
 from esquemas.esquemas import DatosProducto, productosEsquema
 from bson import ObjectId
 
 router = APIRouter(prefix="/productos", tags=["productos"], responses={404: {"message": "Sin productos registrados."}})
+router.mount("/static", StaticFiles(directory="static"), name="static")
+plantillas = Jinja2Templates(directory="plantillas")
 
 @router.get("/", response_model=list[DatosProducto])
 async def listaProductos():
     return productosEsquema(coleccionProductos.find())
+
+@router.get("/nuevo_producto", response_class=HTMLResponse)
+async def nuevoProducto(request: Request):
+    return plantillas.TemplateResponse("p09.html", {"request": request})
 
 @router.post("/nuevo_producto",response_model= DatosProducto ,status_code=201)
 async def nuevoProducto(producto: DatosProducto):
