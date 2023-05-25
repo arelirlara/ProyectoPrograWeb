@@ -73,33 +73,47 @@
     
             for (let i = 0; i < 2; i++) {
                 const div = document.createElement('div');
-                div.classList.add('card', 'my-3');
-                div.style.width = '20rem';
+                div.classList.add('table');
+                div.style.width = '50%';
                 div.innerHTML = `
-                    <div class="card my-3" style="width: 20rem;">
-                        <div class="card-body">
-                            <h5 class="card-title" id="nombreProducto${i}"></h5>
-                            <h6 class="card-subtitle mb-2 text-muted" id="precioProducto${i}"></h6>
-                            <p class="card-text" id="descripcionProducto${i}"></p>
-                        </div>
-                    </div>
-                `;
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h5 id="nombre${i}"></h5>
+                                <p id="telefono${i}"></p>
+                                <p id="celular${i}"></p>
+                                <p id="direccion${i}"></p>
+                                <iframe
+                                width="70%"
+                                height="400"
+                                frameborder="0"
+                                style="border:0"
+                                id="urlMaps${i}"></iframe>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>`;
     
                 container.appendChild(div);
             }
     
             for (let i = 0; i < 2; i++) {
-                const nombreProducto = document.getElementById(`nombreProducto${i}`);
-                const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
-                const precioProducto = document.getElementById(`precioProducto${i}`);
+                const nombre = document.getElementById(`nombre${i}`);
+                const telefono = document.getElementById(`telefono${i}`);
+                const celular = document.getElementById(`celular${i}`);
+                const direccion = document.getElementById(`direccion${i}`);
+                const urlMaps = document.getElementById(`urlMaps${i}`);
     
-                fetch('http://127.0.0.1:8000/contactos/')
+                fetch('http://127.0.0.1:8000/sucursales/')
                     .then(response => response.json())
                     .then(data => {
                         data.forEach(item => {
-                            nombreProducto.textContent = item.nombre;
-                            descripcionProducto.textContent = item.descripcion;
-                            precioProducto.textContent = item.precio;
+                            nombre.textContent = item.nombre;
+                            telefono.textContent = `Teléfono: ${item.telefono}`;
+                            celular.textContent = `Celular: ${item.celular}`;
+                            direccion.textContent = `Dirección: ${item.direccion}`;
+                            urlMaps.src = item.urlMaps;
                         });
                     })
                     .catch(error => {
