@@ -128,10 +128,10 @@
                 .then(response => response.json())
                 .then(data => {
                     data.forEach(item => {
-                        idProducto${i}.textContent = item.id;
-                        nombreProducto${i}.textContent = item.nombre;
-                        descripcionProducto${i}.textContent = item.descripcion;
-                        precioProducto${i}.textContent = item.precio;
+                        idProducto.textContent = item.id;
+                        nombreProducto.textContent = item.nombre;
+                        descripcionProducto.textContent = item.descripcion;
+                        precioProducto.textContent = item.precio;
                     });
                 })
                 .catch(error => {
