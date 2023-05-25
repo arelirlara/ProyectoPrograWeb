@@ -117,8 +117,8 @@
 
             container.appendChild(div);
         }
-
-        for(let i = 0; i < 2; i++) {
+        
+        for (let i = 0; i < 2; i++) {
             const idProducto = document.getElementById(`idProducto${i}`);
             const nombreProducto = document.getElementById(`nombreProducto${i}`);
             const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
@@ -127,38 +127,16 @@
             fetch('http://127.0.0.1:8000/productos/')
                 .then(response => response.json())
                 .then(data => {
-                    data.forEach(item => {
-                        idProducto.textContent = item.id;
-                        nombreProducto.textContent = item.nombre;
-                        descripcionProducto.textContent = item.descripcion;
-                        precioProducto.textContent = item.precio;
-                    });
+                    const item = data[i]; // Obtener el elemento correspondiente al índice actual
+                    idProducto.textContent = item.id;
+                    nombreProducto.textContent = item.nombre;
+                    descripcionProducto.textContent = item.descripcion;
+                    precioProducto.textContent = item.precio;
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
-
-        /*for(let i = 0; i < 2; i++) {
-            const idProducto = document.getElementById(`idProducto${i}`);
-            const nombreProducto = document.getElementById(`nombreProducto${i}`);
-            const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
-            const precioProducto = document.getElementById(`precioProducto${i}`);
-
-            fetch('http://127.0.0.1:8000/productos/')
-                .then(response => response.json())
-                .then(data => {
-                    data.forEach(item => {
-                        idProducto.textContent = item.id;
-                        nombreProducto.textContent = item.nombre;
-                        descripcionProducto.textContent = item.descripcion;
-                        precioProducto.textContent = item.precio;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }*/
     </script>
 </body>
 </html>
