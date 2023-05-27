@@ -1,12 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
-from Routers import autenticacion, catalogo, usuario, sucursales
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from Routers import usuario, sucursales
 
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-app.include_router(autenticacion.router)
-app.include_router(catalogo.router)
 app.include_router(usuario.router)
 app.include_router(sucursales.router)
 

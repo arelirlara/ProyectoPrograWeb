@@ -88,7 +88,7 @@
             const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
             const precioProducto = document.getElementById(`precioProducto${i}`);
 
-            fetch('http://127.0.0.1:8000/productos/')
+            fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
                 .then(response => response.json())
                 .then(data => {
                     const item = data[i]; // Obtener el elemento correspondiente al índice actual
