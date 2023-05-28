@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request, Depends, HTTPException, status
+from fastapi import APIRouter, Request, Depends, HTTPException, status, File, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -58,12 +58,16 @@ async def nosotros(request: Request):
 async def login(request: Request):
     return plantillas.TemplateResponse("login.html", {"request": request})
 
-@router.post("/login/success/catalogo", response_class=HTMLResponse)
+@router.post("/login/success", response_class=HTMLResponse)
 async def enviarFormulario(request: Request, datosFormulario: DatosAutenticacion = Depends(DatosAutenticacion.as_form)):
     usuarioAdmin = buscarUsuario(datosFormulario.usuario, datosFormulario.contrasena)
     if not usuarioAdmin:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Credenciales de autenticación inválidas.")
     
+    return plantillas.TemplateResponse("catalogo_administrador.html", {"request": request})
+
+@router.get("/login/success/catalogo", response_class=HTMLResponse)
+async def catalogoAdministrador(request: Request):
     return plantillas.TemplateResponse("catalogo_administrador.html", {"request": request})
 
 #MÉTODOS PARA VISUALIZAR LOS PRODUCTOS TANTO COMO USUARIO Y ADMINISTRADOR
@@ -74,20 +78,22 @@ async def listaProductos():
 #MÉTODOS ADMINISTRADOR
 @router.get("/login/success/productos/nuevo_producto", response_class=HTMLResponse)
 async def nuevoProducto(request: Request):
-    return plantillas.TemplateResponse("p09.html", {"request": request})
+    return plantillas.TemplateResponse("nuevo_producto_administrador.html", {"request": request})
 
 @router.post("/login/success/productos/crear_producto")
-async def crear_producto(request: Request):
+async def crearProducto(request: Request, imagen: UploadFile = File(...)):
     form_data = await request.form()
     
     nombre_producto = form_data.get('inputNombre')
     descripcion_producto = form_data.get('inputDescripcion')
     precio_producto = form_data.get('inputPrecio')
+    imagen_producto = await imagen.read()
     
     producto = {
         "nombre": nombre_producto,
         "descripcion": descripcion_producto,
-        "precio": precio_producto
+        "precio": precio_producto,
+        "imagen": imagen_producto
     }
 
     coleccionProductos.insert_one(producto)
@@ -121,7 +127,7 @@ async def listaSucursales():
 #MÉTODOS ADMINISTRADOR
 @router.get("/login/success/sucursales/nueva_sucursal", response_class=HTMLResponse)
 async def nuevaSucursal(request: Request):
-    return plantillas.TemplateResponse("p13.html", {"request": request})
+    return plantillas.TemplateResponse("nueva_sucursal_administrador.html", {"request": request})
 
 @router.post("/login/success/sucursales/crear_sucursal")
 async def crearSucursal(request: Request):

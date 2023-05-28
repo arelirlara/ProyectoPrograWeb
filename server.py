@@ -8,5 +8,5 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(api.router)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     uvicorn.run(app)
