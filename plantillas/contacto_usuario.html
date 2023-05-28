@@ -105,7 +105,7 @@
             const direccionSucursal = document.getElementById(`direccion${i}`)
             const urlSucursal = document.getElementById(`urlMaps${i}`)
 
-            fetch('http://127.0.0.1:8000/sucursales/')
+            fetch('http://127.0.0.1:8000/tulip/login/success/sucursales')
                 .then(response => response.json())
                 .then(data => {
                     const item = data[i]; // Obtener el elemento correspondiente al índice actual
