@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, Depends, HTTPException, status, File, UploadFile
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from esquemas.esquemas import DatosAutenticacion, DatosProducto, productosEsquema, DatosSucursales, sucursalesEsquema
@@ -7,6 +7,7 @@ from bson import ObjectId
 from DB.DB import coleccion
 from DB.DB import coleccionProductos
 from DB.DB import coleccionSucursales
+import io
 
 router = APIRouter(prefix="/tulip", tags=["tulip"])
 router.mount("/static", StaticFiles(directory="static"), name="static")
@@ -74,6 +75,15 @@ async def catalogoAdministrador(request: Request):
 @router.get("/login/success/productos", response_model=list[DatosProducto])
 async def listaProductos():
     return productosEsquema(coleccionProductos.find())
+
+@router.get("/product_images/{image_id}")
+def get_product_image(image_id: str):
+    # Obtén la imagen de la base de datos utilizando el ID
+    image_data = coleccionProductos.find_one({"_id": ObjectId(image_id)}, {"imagen": 1})
+
+    # Devuelve la imagen como una respuesta de transmisión
+    return StreamingResponse(io.BytesIO(image_data["imagen"]), media_type="image/jpeg")
+
 
 #MÉTODOS ADMINISTRADOR
 @router.get("/login/success/productos/nuevo_producto", response_class=HTMLResponse)

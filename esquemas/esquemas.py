@@ -25,14 +25,14 @@ class DatosAutenticacion(BaseModel):
 class DatosProducto(DatosGenerales):
     descripcion: str
     precio: str
-    imagen: str
+    imagen_id: str
 
 def productoEsquema(producto) -> dict:
     return {"id": str(producto["_id"]),
             "nombre": str(producto["nombre"]),
             "descripcion": str(producto["descripcion"]),
             "precio": str(producto["precio"]),
-            "imagen": str(producto["imagen"])}
+            "imagen_id": str(producto["imagen"])}
 
 def productosEsquema(productos) -> list:
     return [productoEsquema(producto) for producto in productos]

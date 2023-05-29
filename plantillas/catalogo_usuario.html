@@ -70,7 +70,7 @@
             div.classList.add('card', 'my-3');
             div.style.width = '20rem';
             div.innerHTML = `
-                <img src="${images[i]}" class="card-img-top" alt="Imagen del producto" style="width: 20rem; height: 20rem">
+                <img src="" class="card-img-top" alt="Imagen del producto" style="width: 20rem; height: 20rem" id="imagenProducto">
                 <div class="card my-3" style="width: 20rem;">
                     <div class="card-body">
                         <h5 class="card-title" id="nombreProducto${i}"></h5>
@@ -87,6 +87,8 @@
             const nombreProducto = document.getElementById(`nombreProducto${i}`);
             const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
             const precioProducto = document.getElementById(`precioProducto${i}`);
+            const imagenProducto = document.getElementById(`imagenProducto${i}`)
+            const imageUrl = `http://127.0.0.1:8000/tulip/product_images/${imageId}`;
 
             fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
                 .then(response => response.json())
@@ -95,6 +97,7 @@
                     nombreProducto.textContent = item.nombre;
                     descripcionProducto.textContent = item.descripcion;
                     precioProducto.textContent = item.precio;
+                    imagenProducto.src = imageUrl;
                 })
                 .catch(error => {
                     console.error('Error:', error);
