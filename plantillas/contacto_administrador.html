@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="styelsheet" href="css/estilos.css">
-    <title>Nuevo arreglo</title>
+    <title>Listado sucursales</title>
 </head>
 <body>
     <!-- BARRA DE NAVEGACION -->
@@ -24,10 +24,10 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link active fw-bold" href="/tulip/login/success/catalogo" style="color: #fd0061;">Catálogo</a>
+                                <a class="nav-link fw-bold" href="/tulip/login/success/catalogo">Catálogo</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="/tulip/login/success/contacto">Contacto</a>
+                                <a class="nav-link active fw-bold" href="/tulip/login/success/contacto" style="color: #fd0061;">Contacto</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" href="#">Cerrar sesión</a>
@@ -60,10 +60,16 @@
                             <h2 class="fs-4 fw-bold">Nombre</h2>
                         </div>
                         <div class="col">
-                            <h2 class="fs-4 fw-bold">Descripción</h2>
+                            <h2 class="fs-4 fw-bold">Teléfono</h2>
                         </div>
                         <div class="col">
-                            <h2 class="fs-4 fw-bold">Precio</h2>
+                            <h2 class="fs-4 fw-bold">Celular</h2>
+                        </div>
+                        <div class="col">
+                            <h2 class="fs-4 fw-bold">Dirección</h2>
+                        </div>
+                        <div class="col">
+                            <h2 class="fs-4 fw-bold">URL Maps</h2>
                         </div>
                         <div class="col">
                             <h2 class="fs-4 fw-bold">Opciones</h2>
@@ -78,34 +84,41 @@
     <script>
         const container = document.getElementById('encabezados');
 
-        //GENERAR LAS ETIQUETAS NECESARIAS PARA COLOCAR LOS PRODUCTOS
+        //GENERAR LAS ETIQUETAS NECESARIAS PARA COLOCAR LAS SUCURSALES
         for(let i = 0; i < 3; i++) {
             const div = document.createElement('div');
             div.classList.add('row');
             div.classList.add('text-center')
             div.classList.add('mx-0')
+            div.classList.add('mb-3')
             div.innerHTML = `
                 <div class="col d-flex justify-content-center">
-                    <p class="fs-6 text-primary bold" id="idProducto${i}"></p>
+                    <p class="text-primary bold" id="idSucursal${i}" style="font-size: 12px;"></p>
                 </div>
                 <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="nombreProducto${i}"></p>
+                    <p class="fs-6" id="nombreSucursal${i}"></p>
                 </div>
                 <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="descripcionProducto${i}"></p>
+                    <p class="fs-6" id="telefonoSucursal${i}"></p>
                 </div>
                 <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="precioProducto${i}"></p>
+                    <p class="fs-6" id="celularSucursal${i}"></p>
                 </div>
                 <div class="col d-flex justify-content-center">
-                    <a href="" id="editarProducto${i}">
+                    <p class="fs-6" id="direccionSucursal${i}"></p>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <iframe style="width: 120px;" id="urlMapsSucursal${i}"></iframe>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <a href="" id="editarSucursal${i}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
                             <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
                         </svg>
                     </a>
-                    <a href="#" id="eliminarProducto${i}">
+                    <a href="#" id="eliminarSucursal${i}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                             <line x1="4" y1="7" x2="20" y2="7" />
@@ -123,38 +136,42 @@
         
         //INSERTAR EL CONTENIDO Y ASIGNAR ID's A LAS ETIQUETAS YA GENERADAS
         for (let i = 0; i < 3; i++) {
-            const idProducto = document.getElementById(`idProducto${i}`);
-            const nombreProducto = document.getElementById(`nombreProducto${i}`);
-            const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
-            const precioProducto = document.getElementById(`precioProducto${i}`);
-            const editarProducto = document.getElementById(`editarProducto${i}`);
-            const eliminarProducto = document.getElementById(`eliminarProducto${i}`);
+            const idSucursal = document.getElementById(`idSucursal${i}`);
+            const nombreSucursal = document.getElementById(`nombreSucursal${i}`);
+            const telefonoSucursal = document.getElementById(`telefonoSucursal${i}`);
+            const celularSucursal = document.getElementById(`celularSucursal${i}`);
+            const direccionSucursal = document.getElementById(`direccionSucursal${i}`);
+            const urlMapsSucursal = document.getElementById(`urlMapsSucursal${i}`);
+            const editarSucursal = document.getElementById(`editarSucursal${i}`);
+            const eliminarSucursal = document.getElementById(`eliminarSucursal${i}`);
 
-            fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
+            fetch('http://127.0.0.1:8000/tulip/login/success/sucursales/')
                 .then(response => response.json())
                 .then(data => {
-                    const item = data[i]; // Obtener el elemento correspondiente al índice actual
-                    idProducto.textContent = item.id;
-                    nombreProducto.textContent = item.nombre;
-                    descripcionProducto.textContent = item.descripcion;
-                    precioProducto.textContent = item.precio;
-                    editarProducto.id = item.id;
-                    eliminarProducto.id = `eliminarProducto${item.id}`;
+                    const item = data[i]; // Obtener la sucursal correspondiente al índice actual
+                    idSucursal.textContent = item.id;
+                    nombreSucursal.textContent = item.nombre;
+                    telefonoSucursal.textContent = item.telefono;
+                    celularSucursal.textContent = item.celular;
+                    direccionSucursal.textContent = item.direccion;
+                    urlMapsSucursal.src = item.urlMaps;
+                    editarSucursal.id = item.id;
+                    eliminarSucursal.id = `eliminarSucursal${item.id}`;
                 })
                 .catch(error => {
                     console.error('Error:', error);
                 });
         }
 
-        //ELIMINAR PRODUCTO AL MOMENTO DE DAR CLIC EN ÍCONO
-        const enlacesEliminar = document.querySelectorAll('[id^="eliminarProducto"]');
+        //ELIMINAR SUCURSAL AL MOMENTO DE DAR CLIC EN ÍCONO
+        const enlacesEliminar = document.querySelectorAll('[id^="eliminarSucursal"]');
 
         enlacesEliminar.forEach((enlace) => {
             enlace.addEventListener('click', (event) => {
                 event.preventDefault();
 
-                const id = enlace.id.split('eliminarProducto')[1]; // Obtener el ID del producto
-                const url = `/tulip/login/success/productos/eliminar_producto/${id}`;
+                const id = enlace.id.split('eliminarSucursal')[1]; // Obtener el ID de la sucursal
+                const url = `/tulip/login/success/sucursales/eliminar_sucursal/${id}`;
 
                 fetch(url, {
                     method: 'DELETE',
@@ -162,10 +179,10 @@
                 .then((response) => {
                     if (response.ok) {
                         enlace.parentNode.remove();
-                        console.log("El producto se eliminó correctamente.");
+                        console.log("La sucursal se eliminó correctamente.");
                     } else {
                         response.text().then((errorMessage) => {
-                            console.error("Error al eliminar el producto:", errorMessage);
+                            console.error("Error al eliminar la sucursal:", errorMessage);
                         });
                     }
                 })
