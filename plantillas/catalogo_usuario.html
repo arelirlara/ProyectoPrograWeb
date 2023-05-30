@@ -17,7 +17,7 @@
             <div class="container-fluid ms-2 me-5">
                 <div class="row">
                     <div class="col-9">
-                        <a class="navbar-brand fw-bold fs-2" href="#">
+                        <a class="navbar-brand fw-bold fs-2" href="/tulip/inicio">
                             <img src="/static/logo.jpeg" alt="logo" width="60" height="60"
                                 class="d-inline-block align-text-center rounded-circle me-2">TULIP
                         </a>
@@ -63,7 +63,7 @@
         container.style.display = 'flex';
         container.style.justifyContent = 'center';
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             const div = document.createElement('div');
             div.classList.add('card', 'my-3', 'mx-3');
             div.style.width = '20rem';
@@ -81,7 +81,7 @@
             container.appendChild(div);
         }
 
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             const nombreProducto = document.getElementById(`nombreProducto${i}`);
             const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
             const precioProducto = document.getElementById(`precioProducto${i}`);
