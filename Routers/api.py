@@ -72,7 +72,7 @@ async def catalogoAdministrador(request: Request):
     return plantillas.TemplateResponse("catalogo_administrador.html", {"request": request})
 
 @router.get("/login/success/contacto", response_class=HTMLResponse)
-async def catalogoAdministrador(request: Request):
+async def contactoAdministrador(request: Request):
     return plantillas.TemplateResponse("contacto_administrador.html", {"request": request})
 
 #MÉTODOS PARA VISUALIZAR LOS PRODUCTOS TANTO COMO USUARIO Y ADMINISTRADOR
