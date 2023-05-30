@@ -30,7 +30,7 @@
                                 <a class="nav-link fw-bold" href="/tulip/login/success/contacto">Contacto</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link fw-bold" href="#">Cerrar sesión</a>
+                                <a class="nav-link fw-bold" href="/tulip/inicio">Cerrar sesión</a>
                             </li>
                         </ul>
                     </div>
@@ -66,6 +66,9 @@
                             <h2 class="fs-4 fw-bold">Precio</h2>
                         </div>
                         <div class="col">
+                            <h2 class="fs-4 fw-bold">Imagen</h2>
+                        </div>
+                        <div class="col">
                             <h2 class="fs-4 fw-bold">Opciones</h2>
                         </div>
                     </div>
@@ -84,9 +87,10 @@
             div.classList.add('row');
             div.classList.add('text-center')
             div.classList.add('mx-0')
+            div.classList.add('mb-3')
             div.innerHTML = `
                 <div class="col d-flex justify-content-center">
-                    <p class="fs-6 text-primary bold" id="idProducto${i}"></p>
+                    <p class="text-primary bold" id="idProducto${i}" style="font-size: 12px;"></p>
                 </div>
                 <div class="col d-flex justify-content-center">
                     <p class="fs-6" id="nombreProducto${i}"></p>
@@ -96,6 +100,9 @@
                 </div>
                 <div class="col d-flex justify-content-center">
                     <p class="fs-6" id="precioProducto${i}"></p>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <img style="width: 130px; height: 150px; border: none;" src="" id="imagenProducto${i}"></p>
                 </div>
                 <div class="col d-flex justify-content-center">
                     <a href="" id="editarProducto${i}">
@@ -122,11 +129,12 @@
         }
         
         //INSERTAR EL CONTENIDO Y ASIGNAR ID's A LAS ETIQUETAS YA GENERADAS
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             const idProducto = document.getElementById(`idProducto${i}`);
             const nombreProducto = document.getElementById(`nombreProducto${i}`);
             const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
             const precioProducto = document.getElementById(`precioProducto${i}`);
+            const imagenProducto = document.getElementById(`imagenProducto${i}`);
             const editarProducto = document.getElementById(`editarProducto${i}`);
             const eliminarProducto = document.getElementById(`eliminarProducto${i}`);
 
@@ -137,7 +145,8 @@
                     idProducto.textContent = item.id;
                     nombreProducto.textContent = item.nombre;
                     descripcionProducto.textContent = item.descripcion;
-                    precioProducto.textContent = item.precio;
+                    precioProducto.textContent = `$${item.precio}`;
+                    imagenProducto.src = item.imagen;
                     editarProducto.id = item.id;
                     eliminarProducto.id = `eliminarProducto${item.id}`;
                 })

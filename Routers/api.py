@@ -3,11 +3,10 @@ from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from esquemas.esquemas import DatosAutenticacion, DatosProducto, productosEsquema, DatosSucursales, sucursalesEsquema
-from bson import ObjectId
+from bson import ObjectId, Binary
 from DB.DB import coleccion
 from DB.DB import coleccionProductos
 from DB.DB import coleccionSucursales
-import io
 
 router = APIRouter(prefix="/tulip", tags=["tulip"])
 router.mount("/static", StaticFiles(directory="static"), name="static")
@@ -80,28 +79,19 @@ async def contactoAdministrador(request: Request):
 async def listaProductos():
     return productosEsquema(coleccionProductos.find())
 
-@router.get("/product_images/{image_id}")
-def get_product_image(image_id: str):
-    # Obtén la imagen de la base de datos utilizando el ID
-    image_data = coleccionProductos.find_one({"_id": ObjectId(image_id)}, {"imagen": 1})
-
-    # Devuelve la imagen como una respuesta de transmisión
-    return StreamingResponse(io.BytesIO(image_data["imagen"]), media_type="image/jpeg")
-
-
 #MÉTODOS ADMINISTRADOR
 @router.get("/login/success/productos/nuevo_producto", response_class=HTMLResponse)
 async def nuevoProducto(request: Request):
     return plantillas.TemplateResponse("nuevo_producto_administrador.html", {"request": request})
 
 @router.post("/login/success/productos/crear_producto")
-async def crearProducto(request: Request, imagen: UploadFile = File(...)):
+async def crearProducto(request: Request):
     form_data = await request.form()
     
     nombre_producto = form_data.get('inputNombre')
     descripcion_producto = form_data.get('inputDescripcion')
     precio_producto = form_data.get('inputPrecio')
-    imagen_producto = await imagen.read()
+    imagen_producto = form_data.get('inputURLImagen')
     
     producto = {
         "nombre": nombre_producto,

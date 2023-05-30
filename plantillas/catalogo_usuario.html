@@ -63,14 +63,12 @@
         container.style.display = 'flex';
         container.style.justifyContent = 'center';
 
-        const images = ['/static/tronco_brasil.jpg', '/static/cactus.jpg'];
-
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             const div = document.createElement('div');
-            div.classList.add('card', 'my-3');
+            div.classList.add('card', 'my-3', 'mx-3');
             div.style.width = '20rem';
             div.innerHTML = `
-                <img src="" class="card-img-top" alt="Imagen del producto" style="width: 20rem; height: 20rem" id="imagenProducto">
+                <img src="" class="card-img-top" alt="Imagen del producto" style="width: 20rem; height: 20rem" id="imagenProducto${i}">
                 <div class="card my-3" style="width: 20rem;">
                     <div class="card-body">
                         <h5 class="card-title" id="nombreProducto${i}"></h5>
@@ -83,12 +81,11 @@
             container.appendChild(div);
         }
 
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 2; i++) {
             const nombreProducto = document.getElementById(`nombreProducto${i}`);
             const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
             const precioProducto = document.getElementById(`precioProducto${i}`);
-            const imagenProducto = document.getElementById(`imagenProducto${i}`)
-            const imageUrl = `http://127.0.0.1:8000/tulip/product_images/${imageId}`;
+            const imagenProducto = document.getElementById(`imagenProducto${i}`);
 
             fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
                 .then(response => response.json())
@@ -96,8 +93,8 @@
                     const item = data[i]; // Obtener el elemento correspondiente al índice actual
                     nombreProducto.textContent = item.nombre;
                     descripcionProducto.textContent = item.descripcion;
-                    precioProducto.textContent = item.precio;
-                    imagenProducto.src = imageUrl;
+                    precioProducto.textContent = `$${item.precio}`;
+                    imagenProducto.src = item.imagen;
                 })
                 .catch(error => {
                     console.error('Error:', error);
