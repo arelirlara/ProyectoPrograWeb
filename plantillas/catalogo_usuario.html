@@ -59,47 +59,37 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script>
-        const container = document.getElementById('container');
-        container.style.display = 'flex';
-        container.style.justifyContent = 'center';
+        // CREAR LAS ETIQUETAS NECESARIAS Y MOSTRAR LOS DATOS DE CADA PRODUCTO EN LA COLECCIÓN "PRODUCTS"
+        fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
+        .then(response => response.json())
+        .then(data => {
+            const cantidadElementos = data.length; // Obtener la cantidad de elementos devueltos
+            const container = document.getElementById('container');
+            container.style.display = 'flex';
+            container.style.justifyContent = 'center';
 
-        for (let i = 0; i < 3; i++) {
-            const div = document.createElement('div');
-            div.classList.add('card', 'my-3', 'mx-3');
-            div.style.width = '20rem';
-            div.innerHTML = `
-                <img src="" class="card-img-top" alt="Imagen del producto" style="width: 20rem; height: 20rem" id="imagenProducto${i}">
-                <div class="card my-3" style="width: 20rem;">
-                    <div class="card-body">
-                        <h5 class="card-title" id="nombreProducto${i}"></h5>
-                        <h6 class="card-subtitle mb-2 text-muted" id="precioProducto${i}"></h6>
-                        <p class="card-text" id="descripcionProducto${i}"></p>
+            for (let i = 0; i < cantidadElementos; i++) {
+                const item = data[i];
+                const div = document.createElement('div');
+                div.classList.add('card', 'my-3', 'mx-3');
+                div.style.width = '20rem';
+                div.innerHTML = `
+                    <img src="${item.imagen}" class="card-img-top" alt="Imagen del producto" style="width: 20rem; height: 20rem">
+                    <div class="card my-3" style="width: 20rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.nombre}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${item.precio}</h6>
+                            <p class="card-text">${item.descripcion}</p>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
 
-            container.appendChild(div);
-        }
-
-        for (let i = 0; i < 3; i++) {
-            const nombreProducto = document.getElementById(`nombreProducto${i}`);
-            const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
-            const precioProducto = document.getElementById(`precioProducto${i}`);
-            const imagenProducto = document.getElementById(`imagenProducto${i}`);
-
-            fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
-                .then(response => response.json())
-                .then(data => {
-                    const item = data[i]; // Obtener el elemento correspondiente al índice actual
-                    nombreProducto.textContent = item.nombre;
-                    descripcionProducto.textContent = item.descripcion;
-                    precioProducto.textContent = `$${item.precio}`;
-                    imagenProducto.src = item.imagen;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+                container.appendChild(div);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     </script>
 </body>
 

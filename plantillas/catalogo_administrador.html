@@ -17,14 +17,8 @@
         <div class="container-fluid ms-2 me-5">
             <div class="row-8">
                 <div class="col">
-<<<<<<< HEAD
-                    <a class="navbar-brand fw-bold fs-2" href="/tulip/inicio">
-                        <img src="/static/logo.jpeg" alt="logo" width="60" height="60" class="d-inline-block align-text-center rounded-circle me-2">TULIP
-=======
                     <a class="navbar-brand fw-bold fs-2" href="#">
-                        <img src="/static/logo.jpeg" alt="logo" width="60" height="60"
-                            class="d-inline-block align-text-center rounded-circle me-2">TULIP
->>>>>>> ad7e77a3d9633a7f39dfcdbce9ad071b6450b120
+                        <img src="/static/logo.jpeg" alt="logo" width="60" height="60" class="d-inline-block align-text-center rounded-circle me-2">TULIP
                     </a>
                 </div>
             </div>
@@ -127,81 +121,64 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script>
-        const container = document.getElementById('encabezados');
+        // CREAR LAS ETIQUETAS NECESARIAS Y MOSTRAR LOS DATOS DE CADA PRODUCTO EN LA COLECCIÓN "PRODUCTS"
+        fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
+        .then(response => response.json())
+        .then(data => {
+            const cantidadElementos = data.length; // Obtener la cantidad de elementos devueltos
+            const container = document.getElementById('encabezados');
 
-        //GENERAR LAS ETIQUETAS NECESARIAS PARA COLOCAR LOS PRODUCTOS
-        for (let i = 0; i < 3; i++) {
-            const div = document.createElement('div');
-            div.classList.add('row');
-            div.classList.add('text-center')
-            div.classList.add('mx-0')
-            div.classList.add('mb-3')
-            div.innerHTML = `
-                <div class="col d-flex justify-content-center">
-                    <p class="text-primary bold" id="idProducto${i}" style="font-size: 12px;"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="nombreProducto${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="descripcionProducto${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="precioProducto${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <img style="width: 130px; height: 150px; border: none;" src="" id="imagenProducto${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <a href="" id="editarProducto${i}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-                            <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-                        </svg>
-                    </a>
-                    <a href="#" id="eliminarProducto${i}" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <line x1="4" y1="7" x2="20" y2="7" />
-                            <line x1="10" y1="11" x2="10" y2="17" />
-                            <line x1="14" y1="11" x2="14" y2="17" />
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                        </svg>
-                    </a>
-                </div>
-            `;
+            for (let i = 0; i < cantidadElementos; i++) {
+                const item = data[i];
+                const div = document.createElement('div');
+                div.classList.add('row');
+                div.classList.add('text-center')
+                div.classList.add('mx-0')
+                div.classList.add('mb-3')
+                div.innerHTML = `
+                    <div class="col d-flex justify-content-center">
+                        <p class="text-primary bold" style="font-size: 12px;">${item.id}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">${item.nombre}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">${item.descripcion}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">$${item.precio}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <img src="${item.imagen}" style="width: 130px; height: 150px; border: none;"></p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <a href="" id="editarProducto${item.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                                <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+                            </svg>
+                        </a>
+                        <a href="#" id="eliminarProducto${item.id}" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="4" y1="7" x2="20" y2="7" />
+                                <line x1="10" y1="11" x2="10" y2="17" />
+                                <line x1="14" y1="11" x2="14" y2="17" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </a>
+                    </div>
+                `;
 
-            container.appendChild(div);
-        }
+                container.appendChild(div);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
-        //INSERTAR EL CONTENIDO Y ASIGNAR ID's A LAS ETIQUETAS YA GENERADAS
-        for (let i = 0; i < 3; i++) {
-            const idProducto = document.getElementById(`idProducto${i}`);
-            const nombreProducto = document.getElementById(`nombreProducto${i}`);
-            const descripcionProducto = document.getElementById(`descripcionProducto${i}`);
-            const precioProducto = document.getElementById(`precioProducto${i}`);
-            const imagenProducto = document.getElementById(`imagenProducto${i}`);
-            const editarProducto = document.getElementById(`editarProducto${i}`);
-            const eliminarProducto = document.getElementById(`eliminarProducto${i}`);
-
-            fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
-                .then(response => response.json())
-                .then(data => {
-                    const item = data[i]; // Obtener el elemento correspondiente al índice actual
-                    idProducto.textContent = item.id;
-                    nombreProducto.textContent = item.nombre;
-                    descripcionProducto.textContent = item.descripcion;
-                    precioProducto.textContent = `$${item.precio}`;
-                    imagenProducto.src = item.imagen;
-                    editarProducto.id = item.id;
-                    eliminarProducto.id = `eliminarProducto${item.id}`;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
 
         //ELIMINAR PRODUCTO AL MOMENTO DE DAR CLIC EN ÍCONO
         const enlacesEliminar = document.querySelectorAll('[id^="eliminarProducto"]');
@@ -211,7 +188,7 @@
                 event.preventDefault();
 
                 const id = enlace.id.split('eliminarProducto')[1]; // Obtener el ID del producto
-                const url = `/tulip/login/success/productos/eliminar_producto/${id}`;
+                const url = `http://127.0.0.1:8000/tulip/login/success/productos/eliminar_producto/${id}`;
 
                 // Agregar evento de clic al botón de eliminar del modal de confirmación
                 const confirmarEliminarBtn = document.getElementById('confirmarEliminarBtn');

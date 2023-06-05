@@ -115,127 +115,105 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
-        const container = document.getElementById('encabezados');
+        // CREAR LAS ETIQUETAS NECESARIAS Y MOSTRAR LOS DATOS DE CADA SUCURSAL EN LA COLECCIÓN "STORES"
+        fetch('http://127.0.0.1:8000/tulip/login/success/sucursales/')
+        .then(response => response.json())
+        .then(data => {
+            const cantidadElementos = data.length; // Obtener la cantidad de elementos devueltos
+            const container = document.getElementById('encabezados');
 
-        //GENERAR LAS ETIQUETAS NECESARIAS PARA COLOCAR LAS SUCURSALES
-        for(let i = 0; i < 3; i++) {
-            const div = document.createElement('div');
-            div.classList.add('row');
-            div.classList.add('text-center')
-            div.classList.add('mx-0')
-            div.classList.add('mb-3')
-            div.innerHTML = `
-                <div class="col d-flex justify-content-center">
-                    <p class="text-primary bold" id="idSucursal${i}" style="font-size: 12px;"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="nombreSucursal${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="telefonoSucursal${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="celularSucursal${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <p class="fs-6" id="direccionSucursal${i}"></p>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <iframe style="width: 120px;" id="urlMapsSucursal${i}"></iframe>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <a href="" id="editarSucursal${i}">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
-                            <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
-                        </svg>
-                    </a>
-                    <a href="#" id="eliminarSucursal${i}" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                            <line x1="4" y1="7" x2="20" y2="7" />
-                            <line x1="10" y1="11" x2="10" y2="17" />
-                            <line x1="14" y1="11" x2="14" y2="17" />
-                            <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
-                            <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
-                        </svg>
-                    </a>
-                </div>
-            `;
+            for (let i = 0; i < cantidadElementos; i++) {
+                const item = data[i];
+                const div = document.createElement('div');
+                div.classList.add('row');
+                div.classList.add('text-center')
+                div.classList.add('mx-0')
+                div.classList.add('mb-3')
+                div.innerHTML = `
+                    <div class="col d-flex justify-content-center">
+                        <p class="text-primary bold" style="font-size: 12px;">${item.id}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">${item.nombre}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">${item.telefono}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">${item.celular}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <p class="fs-6">${item.direccion}</p>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <iframe style="width: 120px;" src="${item.urlMaps}"></iframe>
+                    </div>
+                    <div class="col d-flex justify-content-center">
+                        <a href="" id="editarSucursal${item.id}">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
+                                <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
+                            </svg>
+                        </a>
+                        <a href="#" id="eliminarSucursal${item.id}" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <line x1="4" y1="7" x2="20" y2="7" />
+                                <line x1="10" y1="11" x2="10" y2="17" />
+                                <line x1="14" y1="11" x2="14" y2="17" />
+                                <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12" />
+                                <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3" />
+                            </svg>
+                        </a>
+                    </div>
+                `;
 
-            container.appendChild(div);
-        }
-        
-        //INSERTAR EL CONTENIDO Y ASIGNAR ID's A LAS ETIQUETAS YA GENERADAS
-        for (let i = 0; i < 3; i++) {
-            const idSucursal = document.getElementById(`idSucursal${i}`);
-            const nombreSucursal = document.getElementById(`nombreSucursal${i}`);
-            const telefonoSucursal = document.getElementById(`telefonoSucursal${i}`);
-            const celularSucursal = document.getElementById(`celularSucursal${i}`);
-            const direccionSucursal = document.getElementById(`direccionSucursal${i}`);
-            const urlMapsSucursal = document.getElementById(`urlMapsSucursal${i}`);
-            const editarSucursal = document.getElementById(`editarSucursal${i}`);
-            const eliminarSucursal = document.getElementById(`eliminarSucursal${i}`);
+                container.appendChild(div);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 
-            fetch('http://127.0.0.1:8000/tulip/login/success/sucursales/')
-                .then(response => response.json())
-                .then(data => {
-                    const item = data[i]; // Obtener la sucursal correspondiente al índice actual
-                    idSucursal.textContent = item.id;
-                    nombreSucursal.textContent = item.nombre;
-                    telefonoSucursal.textContent = item.telefono;
-                    celularSucursal.textContent = item.celular;
-                    direccionSucursal.textContent = item.direccion;
-                    urlMapsSucursal.src = item.urlMaps;
-                    editarSucursal.id = item.id;
-                    eliminarSucursal.id = `eliminarSucursal${item.id}`;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
 
         // ELIMINAR PRODUCTO AL MOMENTO DE DAR CLIC EN ÍCONO
-const enlacesEliminar = document.querySelectorAll('[id^="eliminarSucursal"]');
+        const enlacesEliminar = document.querySelectorAll('[id^="eliminarSucursal"]');
 
-enlacesEliminar.forEach((enlace) => {
-    enlace.addEventListener('click', (event) => {
-        event.preventDefault();
+        enlacesEliminar.forEach((enlace) => {
+            enlace.addEventListener('click', (event) => {
+                event.preventDefault();
+                const id = enlace.id.split('eliminarSucursal')[1]; // Obtener el ID de la sucursal
 
-        const id = enlace.id.split('eliminarSucursal')[1]; // Obtener el ID de la sucursal
+                // Mostrar el modal de confirmación
+                const confirmarEliminarModal = new bootstrap.Modal(document.getElementById('confirmarEliminarModal'));
+                confirmarEliminarModal.show();
 
-        // Mostrar el modal de confirmación
-        const confirmarEliminarModal = new bootstrap.Modal(document.getElementById('confirmarEliminarModal'));
-        confirmarEliminarModal.show();
+                // Agregar el evento de clic al botón de eliminar dentro del modal
+                const btnEliminarProducto = document.getElementById('btnEliminarProducto');
+                btnEliminarProducto.addEventListener('click', () => {
+                    confirmarEliminarModal.hide();
+                    const url = `/tulip/login/success/sucursales/eliminar_sucursal/${id}/`;
 
-        // Agregar el evento de clic al botón de eliminar dentro del modal
-        const btnEliminarProducto = document.getElementById('btnEliminarProducto');
-        btnEliminarProducto.addEventListener('click', () => {
-            confirmarEliminarModal.hide();
-
-            const url = `/tulip/login/success/sucursales/eliminar_sucursal/${id}`;
-
-            fetch(url, {
-                method: 'DELETE',
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        enlace.parentNode.remove();
-                        console.log("La sucursal se eliminó correctamente.");
-                    } else {
-                        response.text().then((errorMessage) => {
-                            console.error("Error al eliminar la sucursal:", errorMessage);
+                    fetch(url, {
+                        method: 'DELETE',
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                enlace.parentNode.remove();
+                                console.log("La sucursal se eliminó correctamente.");
+                            } else {
+                                response.text().then((errorMessage) => {
+                                    console.error("Error al eliminar la sucursal:", errorMessage);
+                                });
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
                         });
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
                 });
+            });
         });
-    });
-});
-
     </script>
 </body>
 </html>

@@ -67,11 +67,17 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script>
+        // CREAR LAS ETIQUETAS NECESARIAS Y MOSTRAR LOS DATOS DE CADA SUCURSAL EN LA COLECCIÓN "STORES"
+        fetch('http://127.0.0.1:8000/tulip/login/success/sucursales/')
+        .then(response => response.json())
+        .then(data => {
+            const cantidadElementos = data.length; // Obtener la cantidad de elementos devueltos
             const container = document.getElementById('container');
             container.style.display = 'flex';
             container.style.justifyContent = 'center';
-    
-            for (let i = 0; i < 3; i++) {
+
+            for (let i = 0; i < cantidadElementos; i++) {
+                const item = data[i];
                 const div = document.createElement('div');
                 div.classList.add('table');
                 div.style.width = '50%';
@@ -80,16 +86,11 @@
                     <tbody>
                         <tr>
                             <td>
-                                <h5 class="fw-bold" id="nombre${i}"></h5>
-                                <span class="fw-bold">Teléfono: </span><p id="telefono${i}"></p>
-                                <span class="fw-bold">Celular: </span><p id="celular${i}"></p>
-                                <span class="fw-bold">Dirección: </span><p id="direccion${i}"></p>
-                                <iframe
-                                width="70%"
-                                height="400"
-                                frameborder="0"
-                                style="border:0"
-                                id="urlMaps${i}"></iframe>
+                                <h5 class="fw-bold">${item.nombre}</h5>
+                                <span class="fw-bold">Teléfono: </span><p>${item.telefono}</p>
+                                <span class="fw-bold">Celular: </span><p>${item.celular}</p>
+                                <span class="fw-bold">Dirección: </span><p>${item.direccion}</p>
+                                <iframe src="${item.urlMaps}" width="70%" height="400" frameborder="0" style="border:0"></iframe>
                             </td>
                         </tr>
                     </tbody>
@@ -97,28 +98,10 @@
     
                 container.appendChild(div);
             }
-    
-            for (let i = 0; i < 3; i++) {
-            const nombreSucursal = document.getElementById(`nombre${i}`);
-            const telefonoSucursal = document.getElementById(`telefono${i}`);
-            const celularSucursal = document.getElementById(`celular${i}`);
-            const direccionSucursal = document.getElementById(`direccion${i}`)
-            const urlSucursal = document.getElementById(`urlMaps${i}`)
-
-            fetch('http://127.0.0.1:8000/tulip/login/success/sucursales')
-                .then(response => response.json())
-                .then(data => {
-                    const item = data[i]; // Obtener el elemento correspondiente al índice actual
-                    nombreSucursal.textContent = item.nombre;
-                    telefonoSucursal.textContent = item.telefono;
-                    celularSucursal.textContent = item.celular;
-                    direccionSucursal.textContent = item.direccion;
-                    urlSucursal.src = item.urlMaps
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     </script>
 </body>
 
