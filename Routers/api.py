@@ -36,7 +36,12 @@ def buscarProducto(field: str, key):
 def buscarSucursal(field: str, key):
     try:
         sucursal = coleccionSucursales.find_one({field: key})
-        return DatosSucursales(sucursalesEsquema(sucursal))
+        return {"id": str(sucursal["_id"]),
+            "nombre": str(sucursal["nombre"]),
+            "telefono": str(sucursal["telefono"]),
+            "celular": str(sucursal["celular"]),
+            "direccion": str(sucursal["direccion"]),
+            "urlMaps": str(sucursal["urlMaps"])}
     except:
         return {"error": "No se ha encontrado sucursal."}
 #--------------------------------------------------------------------------------
@@ -179,17 +184,33 @@ async def crearSucursal(request: Request):
 
     return plantillas.TemplateResponse("contacto_administrador.html", {"request": request})
 
-@router.put("/login/success/sucursales/editar_sucursal/{id}", response_model=DatosSucursales)
-async def user(sucursal: DatosSucursales):
-        sucursal_diccionario = dict(sucursal)
-        del sucursal_diccionario["id"]
+@router.get("/login/success/sucursales/editar_sucursal/{id}", response_class=HTMLResponse)
+async def editarSucursal(request: Request, id: str):
+    encontrado = buscarSucursal("_id", ObjectId(id))
+    if not encontrado:
+        return {"error": "No se ha encontrado la sucursal."}
+    return plantillas.TemplateResponse("editar_sucursal_administrador.html", {"request": request, "_id": id, "nombre": encontrado['nombre'], "telefono": encontrado['telefono'], "celular": encontrado['celular'], "direccion": encontrado['direccion'], "urlMaps": encontrado['urlMaps']})
 
-        try:
-            coleccionSucursales.find_one_and_replace({"_id": ObjectId(sucursal.id)}, sucursal_diccionario)
-        except:
-            return {"error": "No se ha actualizado el producto."}
-        
-        return buscarSucursal("_id", ObjectId(sucursal.id))
+@router.post("/login/success/sucursales/modificar_sucursal/{id}", response_class=HTMLResponse)
+async def actualizarSucursal(id: str, request: Request):
+    form_data = await request.form()
+    
+    nombre_sucursal = form_data.get('inputNombre')
+    telefono_sucursal = form_data.get('inputTelefono')
+    celular_sucursal = form_data.get('inputCelular')
+    direccion_sucursal = form_data.get('inputDireccion')
+    urlMaps_sucursal = form_data.get('inputURLMaps')
+    
+    sucursal_modificado = {
+        "nombre": nombre_sucursal,
+        "telefono": telefono_sucursal,
+        "celular": celular_sucursal,
+        "direccion": direccion_sucursal,
+        "urlMaps": urlMaps_sucursal
+    }
+
+    coleccionSucursales.find_one_and_replace({"_id": ObjectId(id)}, sucursal_modificado)
+    return plantillas.TemplateResponse("contacto_administrador.html", {"request": request})
 
 @router.delete("/login/success/sucursales/eliminar_sucursal/{id}", status_code=status.HTTP_204_NO_CONTENT)
 async def eliminarSucursal(id: str):

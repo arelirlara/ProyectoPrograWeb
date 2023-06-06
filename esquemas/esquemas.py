@@ -59,6 +59,23 @@ class DatosSucursales(DatosGenerales):
     direccion: str
     urlMaps: str
 
+    @classmethod
+    def form_sucursal(
+        cls,
+        nombre: str = Form(...),
+        telefono: str = Form(...),
+        celular: str = Form(...),
+        direccion: str = Form(...),
+        urlMaps: str = Form(...)
+    ):
+        return cls(
+            nombre=nombre,
+            telefono=telefono,
+            celular = celular,
+            direccion = direccion,
+            urlMaps = urlMaps
+        )
+
 def sucursalEsquema(sucursal) -> dict:
     return {"id": str(sucursal["_id"]),
             "nombre": str(sucursal["nombre"]),
