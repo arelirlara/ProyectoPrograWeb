@@ -80,7 +80,7 @@ async def login(request: Request):
     return plantillas.TemplateResponse("login.html", {"request": request})
 
 @router.post("/login/success", response_class=HTMLResponse)
-async def enviarFormulario(request: Request, datosFormulario: DatosAutenticacion = Depends(DatosAutenticacion.as_form)):
+async def validarFormulario(request: Request, datosFormulario: DatosAutenticacion = Depends(DatosAutenticacion.as_form)):
     usuarioAdmin = buscarUsuario(datosFormulario.usuario, datosFormulario.contrasena)
     if not usuarioAdmin:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, detail="Credenciales de autenticación inválidas.")
@@ -131,7 +131,7 @@ async def editarProducto(request: Request, id: str):
     return plantillas.TemplateResponse("editar_producto_administrador.html", {"request": request, "_id": id, "nombre": encontrado['nombre'], "descripcion": encontrado['descripcion'], "precio": encontrado['precio'], "imagen": encontrado['imagen']})
 
 @router.post("/login/success/productos/modificar_producto/{id}", response_class=HTMLResponse)
-async def actualizarElemento(id: str, request: Request):
+async def actualizarProducto(id: str, request: Request):
     form_data = await request.form()
     
     nombre_producto = form_data.get('inputNombre')
