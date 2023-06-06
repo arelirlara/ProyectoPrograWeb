@@ -35,7 +35,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link fw-bold" data-bs-toggle="modal"
-                                    data-bs-target="#confirmarModal">Cerrar sesión</a>
+                                    data-bs-target="#confirmarModal" href="#">Cerrar sesión</a>
                             </li>
                         </ul>
                     </div>
@@ -121,6 +121,15 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script>
+        function editarProducto(id) {
+            const url = `/tulip/login/success/productos/editar_producto/${id}`;
+            window.location.href = url;
+        }
+
+        function eliminarProducto(id) {
+            const url = `/tulip/login/success/productos/eliminar_producto/${id}`;
+            window.location.href = url;
+        }
         // CREAR LAS ETIQUETAS NECESARIAS Y MOSTRAR LOS DATOS DE CADA PRODUCTO EN LA COLECCIÓN "PRODUCTS"
         fetch('http://127.0.0.1:8000/tulip/login/success/productos/')
         .then(response => response.json())
@@ -152,14 +161,14 @@
                         <img src="${item.imagen}" style="width: 130px; height: 150px; border: none;"></p>
                     </div>
                     <div class="col d-flex justify-content-center">
-                        <a href="" id="editarProducto${item.id}">
+                        <a href="#" id="editarProducto${item.id}" onclick="editarProducto('${item.id}')">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-pencil" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4" />
                                 <line x1="13.5" y1="6.5" x2="17.5" y2="10.5" />
                             </svg>
                         </a>
-                        <a href="#" id="eliminarProducto${item.id}" data-bs-toggle="modal" data-bs-target="#confirmarEliminarModal">
+                        <a href="#" id="eliminarProducto${item.id}" onclick="eliminarProducto('${item.id}')">
                             <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash" width="36" height="36" viewBox="0 0 24 24" stroke-width="2" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                                 <line x1="4" y1="7" x2="20" y2="7" />
@@ -181,18 +190,15 @@
 
 
         //ELIMINAR PRODUCTO AL MOMENTO DE DAR CLIC EN ÍCONO
-        const enlacesEliminar = document.querySelectorAll('[id^="eliminarProducto"]');
-
-        enlacesEliminar.forEach((enlace) => {
+        /*enlacesEliminar.forEach((enlace) => {
             enlace.addEventListener('click', (event) => {
                 event.preventDefault();
-
-                const id = enlace.id.split('eliminarProducto')[1]; // Obtener el ID del producto
-                const url = `http://127.0.0.1:8000/tulip/login/success/productos/eliminar_producto/${id}`;
-
                 // Agregar evento de clic al botón de eliminar del modal de confirmación
                 const confirmarEliminarBtn = document.getElementById('confirmarEliminarBtn');
                 confirmarEliminarBtn.addEventListener('click', () => {
+
+                    const id = enlace.id.split('eliminarProducto')[1]; // Obtener el ID del producto
+                    const url = `tulip/login/success/productos/eliminar_producto/${id}`;
                     fetch(url, {
                         method: 'DELETE',
                     })
@@ -211,7 +217,7 @@
                         });
                 });
             });
-        });
+        });*/
     </script>
 </body>
 

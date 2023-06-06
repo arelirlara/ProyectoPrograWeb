@@ -27,6 +27,21 @@ class DatosProducto(DatosGenerales):
     precio: str
     imagen: str
 
+    @classmethod
+    def form_producto(
+        cls,
+        nombre: str = Form(...),
+        descripcion: str = Form(...),
+        precio: str = Form(...),
+        imagen: str = Form(...),
+    ):
+        return cls(
+            nombre=nombre,
+            descripcion=descripcion,
+            precio = precio,
+            imagen = imagen,
+        )
+
 def productoEsquema(producto) -> dict:
     return {"id": str(producto["_id"]),
             "nombre": str(producto["nombre"]),
